@@ -56,6 +56,11 @@ RUN git clone https://github.com/jpmorganchase/quorum-examples.git
 
 RUN apt-get install -y net-tools
 run apt-get install -y nano
+
+# nvm environment variables
+ENV NVM_DIR /usr/local/nvm
+ENV NODE_VERSION 9.0.0
+
 # install nvm
 # https://github.com/creationix/nvm#install-script
 RUN curl --silent -o- https://raw.githubusercontent.com/creationix/nvm/v0.31.2/install.sh | bash
@@ -78,9 +83,20 @@ RUN npm -v
 
 RUN npm install truffle -g
 
-# nvm environment variables
-ENV NVM_DIR /usr/local/nvm
-ENV NODE_VERSION 9.0.0
+#install app
+
+WORKDIR home
+
+RUN git clone https://github.com/lucachaco/quorum-simple-storage.git
+
+
+
+
+
+
+
+
+
 
 
 
