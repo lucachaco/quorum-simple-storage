@@ -39,12 +39,17 @@ App = {
           App.contracts.SimpleStorage.setProvider(App.web3Provider);
       });
 
+      $.getJSON('SimpleStoragePublico.json', function(ownerProfileMappingArtifact) {
+          App.contracts.SimpleStoragePublico = TruffleContract(ownerProfileMappingArtifact);
+          App.contracts.SimpleStoragePublico.setProvider(App.web3Provider);
+      });
+
 
       return App.bindEvents();
   },
 
 
-    testMap : function() {
+    testPrivateStore : function() {
         App.contracts.SimpleStorage.deployed().then(function(instance) {
             console.log("1");
             console.log(instance);
@@ -61,6 +66,23 @@ App = {
         });
     },
 
+
+    testPublicStore : function() {
+        App.contracts.SimpleStoragePublico.deployed().then(function(instance) {
+            console.log("1");
+            console.log(instance);
+            console.log("2");
+
+            return instance.get();
+
+        }).then(function(name) {
+            console.log(name);
+
+
+        }).catch(function(err) {
+            console.log(err.message);
+        });
+    },
 
 
   bindEvents: function() {
