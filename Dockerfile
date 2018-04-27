@@ -18,12 +18,12 @@ RUN add-apt-repository ppa:ethereum/ethereum
 
 RUN apt-get update
 
-RUN apt-get install -y build-essential unzip libdb-dev libleveldb-dev libsodium-dev zlib1g-dev libti$
+RUN apt-get install -y build-essential unzip libdb-dev libleveldb-dev libsodium-dev zlib1g-dev libtinfo-dev solc sysvbanner wrk
 
 RUN apt install -y curl
 
 # install constellation
-RUN curl -L https://github.com/jpmorganchase/constellation/releases/download/v0.3.2/constellation-0.$
+RUN curl -L https://github.com/jpmorganchase/constellation/releases/download/v0.3.2/constellation-0.3.2-ubuntu1604.tar.xz -o constellation-0.3.2-ubuntu1604.tar.xz
 RUN tar xf constellation-0.3.2-ubuntu1604.tar.xz
 RUN cp constellation-0.3.2-ubuntu1604/constellation-node /usr/local/bin
 
@@ -44,9 +44,11 @@ RUN cp build/bin/geth /usr/local/bin
 RUN cp build/bin/bootnode /usr/local/bin
 WORKDIR /
 
+
 # install Porosity
 RUN curl -L https://github.com/jpmorganchase/quorum/releases/download/v1.2.0/porosity -o porosity
 RUN mv porosity /usr/local/bin && chmod 0755 /usr/local/bin/porosity
+
 
 ##get examples
 
