@@ -17,21 +17,51 @@ App = {
     return App.initWeb3();
   },
 
-  initWeb3: function() {
-    /*
-     * Replace me...
-     */
 
-    return App.initContract();
-  },
+    initWeb3: function() {
+        // Is there an injected web3 instance?
+        if (typeof web3 !== 'undefined') {
+            App.web3Provider = web3.currentProvider;
+        } else {
+            // If no injected web3 instance is detected, fall back to Ganache
+            App.web3Provider = new Web3.providers.HttpProvider('http://localhost:21000');
+        }
+        web3 = new Web3(App.web3Provider);
+
+        return App.initContract();
+    },
+
 
   initContract: function() {
-    /*
-     * Replace me...
-     */
 
-    return App.bindEvents();
+      $.getJSON('SimpleStorage.json', function(ownerProfileMappingArtifact) {
+          App.contracts.SimpleStorage = TruffleContract(ownerProfileMappingArtifact);
+          App.contracts.SimpleStorage.setProvider(App.web3Provider);
+      });
+
+
+      return App.bindEvents();
   },
+
+
+    testMap : function() {
+        App.contracts.SimpleStorage.deployed().then(function(instance) {
+            console.log("1");
+            console.log(instance);
+            console.log("2");
+
+            return instance.get();
+
+        }).then(function(name) {
+            console.log(name);
+
+
+        }).catch(function(err) {
+            console.log(err.message);
+        });
+    },
+
+
 
   bindEvents: function() {
     $(document).on('click', '.btn-adopt', App.handleAdopt);

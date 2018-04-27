@@ -54,6 +54,7 @@ RUN mv porosity /usr/local/bin && chmod 0755 /usr/local/bin/porosity
 
 RUN git clone https://github.com/jpmorganchase/quorum-examples.git
 
+
 ## install tools
 
 RUN apt-get install -y net-tools
@@ -88,10 +89,8 @@ RUN npm install truffle -g
 #install app
 
 WORKDIR home
-
+RUN pwd
 RUN git clone https://github.com/lucachaco/quorum-simple-storage.git
-
-
 
 
 
